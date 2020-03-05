@@ -1,0 +1,13 @@
+**/__pycache__
+page_data.pickle
+**/*~
+static
+static/**
+media
+media/**
+/media
+/media/**
+media/**
+.vscode/**
+node_modules
+node_modules/**
