@@ -1,1 +1,1 @@
-## HE Management Backend Django
+## HR Management Backend Django
