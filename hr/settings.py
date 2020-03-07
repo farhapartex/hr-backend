@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_auth',
     'user',
-    'system'
+    'system',
+    'company'
 ]
 
 MIDDLEWARE = [
