@@ -11,5 +11,7 @@ djangorestframework = "*"
 django-filter = "*"
 django-rest-auth = "*"
 django-cors-headers = "*"
+psycopg2-binary = "*"
+pillow = "*"
 
 [requires]
