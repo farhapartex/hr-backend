@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'rest_auth',
+    'user',
+    'system'
 ]
 
 MIDDLEWARE = [
@@ -75,6 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hr.wsgi.application'
 CORS_ORIGIN_ALLOW_ALL = True
+AUTH_USER_MODEL = "user.User"
 
 
 # Database
