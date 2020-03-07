@@ -40,4 +40,5 @@ class Role(models.Model):
         return self.get_id_display()
 
 class User(AbstractUser, Base):
+    email = models.EmailField(_('email address'),unique=True, blank=True)
     role = models.ForeignKey(Role, verbose_name=_("User Role"), on_delete=models.SET_NULL, null=True)
