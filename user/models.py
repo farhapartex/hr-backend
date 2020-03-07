@@ -27,5 +27,17 @@ class Base(models.Model):
         abstract = True
 
 
+class Role(models.Model):
+    SUPER_ADMIN = 1
+    ADMIN = 2
+    EMPLOYEE = 3
+    BANNED = 4
+
+    ROLE_CHOICES = ((SUPER_ADMIN,'Super Admin'),(ADMIN,'Admin'),(EMPLOYEE,'Employee'),(BANNED,'Banned'))
+    id = models.PositiveIntegerField(_("ROLE ID"), choices=ROLE_CHOICES, primary_key=True)
+
+    def __str__(self):
+        return self.get_id_display()
+
 class User(AbstractUser, Base):
-    pass
+    role = models.ForeignKey(Role, verbose_name=_("User Role"), on_delete=models.SET_NULL, null=True)
