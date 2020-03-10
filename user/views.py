@@ -12,3 +12,11 @@ class PermissionListAPIView(generics.ListAPIView):
     queryset = Permission.objects.all()
     serializer_class = PermissionSerializer
     permission_classes = (IsAuthenticated,IsSuperAdmin)
+
+class GroupAPIViewset(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = (IsAuthenticated, GroupPermission)
+
+    def get_serializer_class(self):
+        return GroupMinimalSerializer if self.action == "list" else GroupSerializer

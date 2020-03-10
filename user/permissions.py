@@ -1,9 +1,10 @@
 from django.contrib.auth.models import Group, Permission
 from rest_framework import permissions
 
-def _check_has_permission(request,model, view):
+def _check_has_permission(request, model, view):
+    perm_str = ""
     if view.action == "list":
-            perm_str = model._meta.app_label + ".view_" + model.__name__.lower()
+        perm_str = model._meta.app_label + ".view_" + model.__name__.lower()
     elif view.action == "create":
         perm_str = model._meta.app_label + ".add_" + model.__name__.lower()
     elif view.action == "update":
