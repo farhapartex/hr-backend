@@ -8,14 +8,18 @@ class PermissionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class GroupMinimalSerializer(serializers.ModelSerializer):
-    count = serializers.SerializerMethodField()
+    total_permission = serializers.SerializerMethodField()
+    total_user = serializers.SerializerMethodField()
 
-    def get_count(self, model):
+    def get_total_permission(self, model):
         return model.permissions.all().count()
+
+    def get_total_user(self, model):
+        return model.user_set.count()
 
     class Meta:
         model = Group
-        fields = ("id", "name", "count")
+        fields = ("id", "name", "total_permission", "total_user")
 
 class GroupSerializer(serializers.ModelSerializer):
         
