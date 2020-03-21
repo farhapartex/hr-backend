@@ -20,3 +20,11 @@ class GroupAPIViewset(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         return GroupMinimalSerializer if self.action == "list" else GroupSerializer
+
+class LoggedInUserAPIView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return User.objects.filter(username=self.request.user.username)

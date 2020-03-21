@@ -13,6 +13,7 @@ router.register(r"groups", u_views.GroupAPIViewset)
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r"^api/v1/rest-auth/", include("rest_auth.urls")),
+    re_path(r"^api/v1/logged-in-user/", u_views.LoggedInUserAPIView.as_view()),
     path("api/v1/permissions/", u_views.PermissionListAPIView.as_view()),
     re_path(r"^api/v1/", include(router.urls)),
 ]
