@@ -12,6 +12,7 @@ router = DefaultRouter()
 
 router.register(r"groups", u_views.GroupAPIViewset)
 router.register(r"companies", com_views.CompanyAPIViewSet)
+router.register(r"users", u_views.UserAPIView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

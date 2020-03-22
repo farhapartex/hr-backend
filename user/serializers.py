@@ -44,11 +44,15 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = "__all__"
 
-class UserMinimalSerializer(serializers.ModelSerializer):
+class UserEmployeeMinimalSerializer(serializers.ModelSerializer):
     employee = EmployeeMinimalSerializer(read_only=True)
 
     class Meta:
         model = User
         fields = ("id", "first_name", "last_name", "username", "email", "image", "employee")
 
+class UserMinimalSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = User
+        fields = ("id", "first_name", "last_name", "username", "email", "image",)
