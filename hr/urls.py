@@ -5,10 +5,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from user import views as u_views
+from system import views as sys_views
+from company import views as com_views
 
 router = DefaultRouter()
 
 router.register(r"groups", u_views.GroupAPIViewset)
+router.register(r"companies", com_views.CompanyAPIViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
