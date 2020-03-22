@@ -5,3 +5,7 @@ from .models import *
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ("username", "email", "is_superuser", "is_staff", "last_login", "is_active")
+
+@admin.register(Employee)
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ("id", "user", "branch", "designation", "joining_date", "active")

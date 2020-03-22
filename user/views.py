@@ -23,7 +23,7 @@ class GroupAPIViewset(viewsets.ModelViewSet):
 
 class LoggedInUserAPIView(generics.ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserMinimalSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):

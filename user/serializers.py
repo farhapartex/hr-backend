@@ -27,7 +27,28 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = "__all__"
 
+class EmployeeMinimalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = ("id", "branch", "designation", "joining_date",)
+
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = "__all__"
+
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
-        fields = ("id", "first_name", "last_name", "username", "email", "is_staff", "is_active", "is_superuser", "date_joined")
+        fields = "__all__"
+
+class UserMinimalSerializer(serializers.ModelSerializer):
+    employee = EmployeeMinimalSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ("id", "first_name", "last_name", "username", "email", "image", "employee")
+
+
