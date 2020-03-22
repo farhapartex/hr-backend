@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from user.models import Base
+from system.models import Base
 # Create your models here.
 
 def image_upload_path(instance, filename):

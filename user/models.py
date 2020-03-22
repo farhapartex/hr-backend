@@ -2,43 +2,39 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import Group, Permission, AbstractUser
 import logging
-from .utils import *
+from system.models import Base
+from company.models import *
 # Create your models here.
 
 logger = logging.getLogger(__name__)
 
-class Base(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey("user.User", null=True, editable=False,
-                                   related_name="%(app_label)s_%(class)s_created", on_delete=models.CASCADE)
-    updated_at = models.DateTimeField(auto_now=True)
-    updated_by = models.ForeignKey("user.User", null=True, editable=False,
-                                   related_name="%(app_label)s_%(class)s_updated", on_delete=models.CASCADE)
+def image_upload_path(instance, filename):
+    return "user_{0}/{1}".format(instance.id, filename)
 
-    def save(self, *args, **kwargs):
-        user = get_current_user()
-        if user and user.is_authenticated:
-            self.updated_by = user
-            if self._state.adding:
-                self.created_by = user
-        super(Base, self).save(*args, **kwargs)
-
-    class Meta:
-        abstract = True
-
-
-# class Role(models.Model):
-#     SUPER_ADMIN = 1
-#     ADMIN = 2
-#     EMPLOYEE = 3
-#     BANNED = 4
-
-#     ROLE_CHOICES = ((SUPER_ADMIN,'Super Admin'),(ADMIN,'Admin'),(EMPLOYEE,'Employee'),(BANNED,'Banned'))
-#     id = models.PositiveIntegerField(_("ROLE ID"), choices=ROLE_CHOICES, primary_key=True)
-
-#     def __str__(self):
-#         return self.get_id_display()
 
 class User(AbstractUser, Base):
     email = models.EmailField(_('email address'),unique=True, blank=True)
-    # role = models.ForeignKey(Role, verbose_name=_("User Role"), on_delete=models.SET_NULL, null=True)
+    height = models.IntegerField(_("Height"), blank=True, null=True)
+    width = models.IntegerField(_("Width"), blank=True, null=True)
+    image = models.ImageField(
+        _("Image"),
+        upload_to=image_upload_path,
+        height_field="height",
+        width_field="width",
+        max_length=500,
+        null=True
+    )
+
+
+PROBATION_CHOICES = ((0, 'No Probation'),(1, '1 Month'), (3, '3 Months'), (6, '6 Months'), (8, '8 Months'), (12, '1 Year'), (18, '1.5 years'))
+class Employee(Base):
+    user = models.OneToOneField(User, related_name="employee", on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, related_name="employees", on_delete=models.SET_NULL, blank=True, null=True)
+    designation = models.ForeignKey(Designation, related_name="d_employees", on_delete=models.SET_NULL, blank=True, null=True)
+    joining_date = models.DateField()
+    salary = models.DecimalField(max_digits=12, decimal_places=2)
+    probation_period = models.IntegerField(choices=PROBATION_CHOICES, default=3)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.user.username
